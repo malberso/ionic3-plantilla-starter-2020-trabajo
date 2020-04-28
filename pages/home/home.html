@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Página principal</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <p>Hola! Soy {{campeon.nombre}}</p>
+  Indica tu nombre: <input type="text" [(ngModel)]="campeon.nombre"/>
+  <button ion-button block color="secondary" (click)="cambiarNombre('Draven')">Cambiar nombre</button>
+  <button ion-button block color="primary" (click)="mostrarDescripcion = true">Mostrar descripción</button>
+  <button ion-button block color="primary" (click)="mostrarDescripcion = false">Ocultar descripción</button>
+
+  <div *ngIf="mostrarDescripcion">
+    <h2>
+      Descripción:
+    </h2>
+    <p>
+      {{campeon.descripcion}}
+    </p>
+  </div>
+
+  <h2 *ngIf="listaCampeones.length > 0" [ngClass]="{ 'color-verde': listaCampeones.length >= 3, 'color-naranja': listaCampeones.length < 3 }">Lista campeones:</h2>
+  <h2 *ngIf="listaCampeones.length == 0">No hay campeones en la lista.</h2>
+  <ul>
+    <li *ngFor = "let campeon of listaCampeones; let i = index">
+      {{i}}.-{{campeon}}
+    </li>
+  </ul>
+  <br>
+
+
+
+<br>
+Nombre del nuevo campeón favorito: <input type="text" [(ngModel)]="nuevoCampeonFavorito">
+<button ion-button round (click)="campeonesSvc.anyadirCampeonFavorito(nuevoCampeonFavorito)">Añadir camp. favorito</button>
+<br>
+Último campeón favorito añadido: {{ campeonesSvc.obtenerUltimoCampeonFavorito() }}
+<p>Lista de los campeones favoritos:</p>
+<ul>
+    <li *ngFor="let campeonFavorito of campeonesSvc.obtenerCampeonesFavoritos()">
+        {{ campeonFavorito }}
+    </li>
+</ul>
+<button ion-button color="danger" clear (click)="irAPaginaCampeonDetalle()">Ir a página campeon-detalle</button>
+
+<button ion-button color="dark" clear (click)="irAPaginaCampeonDetalleConParametroNombre(campeon.nombre)"
+>Ir a página campeon-detalle con parámetro nombre</button>
+
+<button ion-button color="primary" outline (click)="hacerPaginaCameponDetalleRaiz()">Hacer que campeon-detalle sea la página raíz</button>
+
+</ion-content>
